@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" href="styles.css">
+	</head>
+	<body>
+
+		<h1>Webdesktop Lösung</h1>
+		<p>Damit sollte der Webdesktop realisierbar sein. Einfach auf das graue quadrat<br>klicken und es verschieben. Im eigentlichen Release könnte man sicherlich<br>den EventListener nur dann aktivieren, falls eine Verschiebung der Fenster<br>gewünscht ist.<br><br>Die Fenster kann man eventuell über eine Verschachtelung von div-Elementen<br>realisieren und steuern.</p>
+		<div class="mb-example">
+	 	<div class="wrapper"> 
+	 		<div class="move">
+				<font color="white" size="2">
+					TestWindow
+				</font>
+				<div class="window"><center><br><br>Inhalt des<br>Fensters.</center></div>
+			</div> 
+ 		</div>
+		<script>
+			 var elem = document.querySelector('.wrapper'),
+         		div = document.querySelector('.move'),
+         		x = 0,
+         		y = 0,
+         		mousedown = false;
+
+ 			// div event mousedown
+ 			div.addEventListener('mousedown', function (e) {
+     				// mouse state set to true
+     				mousedown = true;
+     				// subtract offset
+     				x = div.offsetLeft - e.clientX;
+     				y = div.offsetTop - e.clientY;
+ 			}, true);
+
+ 			// div event mouseup
+ 			div.addEventListener('mouseup', function (e) {
+     				// mouse state set to false
+     				mousedown = false;
+ 			}, true);
+
+			// element mousemove to stop
+ 			elem.addEventListener('mousemove', function (e) {
+     				// Is mouse pressed
+     				if (mousedown) {
+         				// calculate the difference upwards
+         				div.style.left = e.clientX + x + 'px';
+					div.style.top = e.clientY + y + 'px';
+					// check for border restrictions of mb-example
+					div.style.left = ((div.style.left.charAt(0) == '-') ? '0px' : div.style.left);
+					div.style.top = ((div.style.top.charAt(0) == '-') ? '0px' : div.style.top);
+					var left = parseInt(div.style.left.substring(0, div.style.left.length - 2), 10);
+					var top = parseInt(div.style.top.substring(0, div.style.top.length - 2), 10);
+					div.style.left = ((left > 660) ? '658px' : div.style.left);
+					div.style.top = ((top > 460 ) ? '458px' : div.style.top);
+					console.log(left, top);
+     				}
+ 			}, true);
+		</script>
+		</div>
+	</body>
+</html>
